@@ -8,11 +8,12 @@ import (
 func main() {
 	account := accounts.NewAccount("Baby Tiger")
 	account.Deposit(10)
-	fmt.Println(account.Balance())
 
+	// Handle Errors
 	err := account.Withdraw(20)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(account.Balance())
+	fmt.Printf("%s's Current Balance : %d", account.Owner(), account.Balance())
+	fmt.Println("")
 }

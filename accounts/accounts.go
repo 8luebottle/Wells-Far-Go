@@ -11,6 +11,8 @@ type Account struct {
 	balance int
 }
 
+var errNoMoney = errors.New("Can't withdraw money from your account.")
+
 // NewAccount creates Account
 func NewAccount(owner string) *Account { // Don't make it a copy. Use Pointer
 	account := Account{owner: owner, balance: 0}
@@ -31,8 +33,18 @@ func (a Account) Balance() int {
 // Withdraw x amount from your account
 func (a *Account) Withdraw(amount int) error {
 	if a.balance < amount {
-		return errors.New("Can't withdraw your money")
+		return errNoMoney
 	}
 	a.balance -= amount
 	return nil
+}
+
+// ChangeOwner of the account
+func (a *Account) ChangeOwner(newOwner string) { // return nothing
+	a.owner = newOwner
+}
+
+//
+func (a Account) Owner() string {
+	return a.owner
 }
