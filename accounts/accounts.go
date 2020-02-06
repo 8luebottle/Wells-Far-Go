@@ -44,7 +44,12 @@ func (a *Account) ChangeOwner(newOwner string) { // return nothing
 	a.owner = newOwner
 }
 
-//
+// Owner of the account
 func (a Account) Owner() string {
 	return a.owner
+}
+
+// fmt.Println(account)
+func (a Account) String() string {
+	return fmt.Sprint(a.Owner(), "'s Account\n", "Balance :", a.Balance())
 }
