@@ -1,0 +1,43 @@
+# GO
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/hack/.test-cmd-auth
+.gopath/
+vendor/
+
+# DOCKER
+.vagrant*
+bin
+docker/docker
+.*.swp
+a.out
+*.orig
+build_src
+.flymake*
+docs/_build
+docs/_static
+docs/_templates
+.dotcloud
+bundles/
+.hg/
+vendor/pkg/
+pyenv
+Vagrantfile
+
+# IntelliJ
+*.iml
+*.idea
+
+# OTHER
+.git/
+.DS_Store
+deploy/.env
+*.yaml
+*.log
+*.key
+.terraform

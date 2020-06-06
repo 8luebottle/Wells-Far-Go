@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/8luebottle/learngo/accounts"
+
+	"github.com/8luebottle/Wells-Far-Go/accounts"
 )
 
 func main() {

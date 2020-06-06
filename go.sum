@@ -1,0 +1,6 @@
+github.com/8luebottle/Wells-Far-Go v0.0.0-20200606132858-f1c91aac3edb h1:jkAq7WGfYyUegE+GcovU1QGD4iQle272dyqAfZ73Gzk=
+github.com/8luebottle/Wells-Far-Go v0.0.0-20200606132858-f1c91aac3edb/go.mod h1:vv7EjECiaC/3XH309LQxw8qVLULq/4Qb8m8Qht8SU3k=
+github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
+github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/twinj/uuid v1.0.0 h1:fzz7COZnDrXGTAOHGuUGYd6sG+JMq+AoE7+Jlu0przk=
+github.com/twinj/uuid v1.0.0/go.mod h1:mMgcE1RHFUFqe5AfiwlINXisXfDGro23fWdPUfOMjRY=
