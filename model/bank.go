@@ -9,6 +9,6 @@ type Bank struct {
 type Branch struct {
 	ID       int64  `json:"bid"`
 	BankCode string `json:"bank_code" gorm:"not null"`
-	Name     string `json:"name"`
+	Name     string `json:"name" gorm:"not null"`
 	Location string `json:"location"`
 }

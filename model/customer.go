@@ -18,7 +18,7 @@ const (
 
 // Todo : Segment customer status & Country Code
 type Customer struct {
-	ID             int64   `json:"cid"`
+	ID             string  `json:"cid" gorm:"PRIMARY_KEY"`
 	Password       string  `json:"-"`
 	Status         int8    `json:"status"`
 	FirstName      string  `json:"first_name" gorm:"not null"`
