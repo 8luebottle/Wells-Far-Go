@@ -11,8 +11,8 @@ const (
 
 type Address struct {
 	ID            int64       `json:"aid"`
-	CustomerID    int64       `json:"cid"`            // fk
-	AccountNumber int64       `json:"account_number"` // fk
+	CustomerID    string      `json:"cid"`            // fk
+	AccountNumber string      `json:"account_number"` // fk
 	Type          AddressType `json:"type"`
 	State         string      `json:"state"`
 	City          string      `json:"city"`
