@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -31,6 +32,8 @@ func Run() {
 	if err := createTable(db); err != nil {
 		log.Fatalf("create database table : '%v'", err)
 	}
+
+	fmt.Println(api.BANNER)
 	e.Logger.Fatal(e.Start(api.PORT))
 }
 
