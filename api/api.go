@@ -1,11 +1,12 @@
 package api
 
 const (
-	DOMAIN  = ""
-	VERSION = "v1"
-	PORT    = ":7070"
-	LOCAL   = "http://127.0.0.1" + PORT
-	BANNER  = `
+	DOMAIN    = ""
+	VERSION   = "v1"
+	PORT      = ":7070"
+	LOCAL     = "http://127.0.0.1" + PORT
+	APIConfig = "WELLS_FAR_GO_CONFIG"
+	BANNER    = `
 dP   dP   dP          dP dP                    88888888b                             .88888.          
 88   88   88          88 88                    88                                   d8'    88
 88  .8P  .8P .d8888b. 88 88 .d8888b.          a88aaaa    .d8888b. 88d888b.          88        .d8888b.

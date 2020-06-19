@@ -35,7 +35,8 @@ type Customer struct {
 	DeletedAt      int64   `json:"deleted_at,omitempty"`
 }
 
-var genderToString = map[Gender]string{
+// map[Gender]string
+var genderToString = map[interface{}]string{
 	Male:         "Male",
 	Female:       "Female",
 	NotSpecified: "Not Specified",
