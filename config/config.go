@@ -11,7 +11,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var c Config
+var (
+	c Config
+	d *gorm.DB
+)
 
 type Config struct {
 	APIName   string   `yaml:"api_name"`
@@ -71,10 +74,14 @@ func initDB(dbConfig Config) error {
 	if err != nil {
 		return errors.Wrap(err, "open database")
 	}
-	db = db.Debug()
+	d = db.Debug()
 	return nil
 }
 
 func GetConfig() Config {
 	return c
+}
+
+func Conn() *gorm.DB {
+	return d
 }

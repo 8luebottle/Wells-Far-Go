@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -20,27 +19,23 @@ type Server struct {
 	Conf     config.Config
 }
 
-var d *gorm.DB
-
 func Run() {
 	e := NewEcho()
-	apiPath := os.Getenv("WELLS_FAR_GO_CONFIG")
+
+	apiPath := os.Getenv(api.APIConfig)
 	if err := config.InitAPIConfig(apiPath); err != nil {
 		log.Fatalf("init api config : '%v'", err)
 	}
 
-	db := NewDB()
-	// Todo : Create Table
+	db := config.Conn()
 	if err := createTable(db); err != nil {
 		log.Fatalf("create database table : '%v'", err)
 	}
-
 	e.Logger.Fatal(e.Start(api.PORT))
 }
 
-func (s *Server) createTable() error {
-	db := NewDB
-	if err := s.Database.AutoMigrate(
+func createTable(d *gorm.DB) error {
+	if err := d.AutoMigrate(
 		&model.Account{}, &model.Address{},
 		&model.Bank{},
 		&model.Customer{},
@@ -56,19 +51,4 @@ func NewEcho() *echo.Echo {
 	InitRouters(e)
 	mw.EnableCORS(e)
 	return e
-}
-
-func NewDB() *gorm.DB {
-	con := config.GetConfig()
-	dbInfo := con.ConnectDB()
-	db, err := gorm.Open(con.DB.Driver, dbInfo)
-	if err != nil {
-		fmt.Sprintf("err : %s", err)
-	}
-	db.LogMode(true)
-	return db
-}
-
-func Conn() *gorm.DB {
-	return d
 }
