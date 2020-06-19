@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -23,6 +22,7 @@ type Server struct {
 func Run() {
 	e := NewEcho()
 
+	api.PrintBanner()
 	apiPath := os.Getenv(api.APIConfig)
 	if err := config.InitAPIConfig(apiPath); err != nil {
 		log.Fatalf("init api config : '%v'", err)
@@ -33,10 +33,10 @@ func Run() {
 		log.Fatalf("create database table : '%v'", err)
 	}
 
-	fmt.Println(api.BANNER)
 	e.Logger.Fatal(e.Start(api.PORT))
 }
 
+// createTable creates database tables to RDBMS.
 func createTable(d *gorm.DB) error {
 	if err := d.AutoMigrate(
 		&model.Account{}, &model.Address{},

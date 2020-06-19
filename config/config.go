@@ -41,6 +41,7 @@ type Logger struct {
 	Output       string `yaml:"output"`
 }
 
+// ConnetDB returns database connection source as a string.
 func (c Config) ConnectDB() string {
 	return fmt.Sprintf(
 		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
@@ -48,6 +49,8 @@ func (c Config) ConnectDB() string {
 	)
 }
 
+// InitAPIConfig initializes API Configuration setting,
+// such Database, and Logger.
 func InitAPIConfig(configPath string) error {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		return errors.Wrap(err, "is not exist")
@@ -68,9 +71,10 @@ func InitAPIConfig(configPath string) error {
 	return nil
 }
 
+// initDB initializes a new PostgreSQL database with debug mode.
 func initDB(dbConfig Config) error {
-	c := dbConfig.ConnectDB()
-	db, err := gorm.Open("postgres", c)
+	connectionInfo := dbConfig.ConnectDB()
+	db, err := gorm.Open("postgres", connectionInfo)
 	if err != nil {
 		return errors.Wrap(err, "open database")
 	}

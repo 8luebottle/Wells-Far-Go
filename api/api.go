@@ -1,5 +1,7 @@
 package api
 
+import "fmt"
+
 const (
 	DOMAIN    = ""
 	VERSION   = "v1"
@@ -17,3 +19,8 @@ dP   dP   dP          dP dP                    88888888b                        
 )
 
 type API struct{}
+
+// PrintBanner prints 'Wells-Far-Go' Banner on console.
+func PrintBanner() {
+	fmt.Println(BANNER)
+}

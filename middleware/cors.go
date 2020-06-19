@@ -7,6 +7,8 @@ import (
 	"github.com/8luebottle/Wells-Far-Go/api"
 )
 
+// EnableCORS enables cross-origin resource sharing.
+// It sets Allow-Origin, Allow-Method, Allow-Header, and Allow-Credentials
 func EnableCORS(e *echo.Echo) {
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{
