@@ -1,0 +1,18 @@
+app_name : 'wells_far_go'
+api_prefix: ''
+
+db:
+  driver: 'postgresql'
+  host: 'HOST_INFO'
+  port: 5432
+  username: 'DB_USER_NAME'
+  verbose: true
+  password: 'DB_PASSWORD_INFO'
+  dbname: 'DB_NAME'
+  sslmode: 'SSL_MODE_INFO'
+
+logger:
+  is_production: false
+  level: 'LOG_LEVEL'
+  format: 'LOG_FORMAT'
+  output: 'LOG_OUTPUT'
