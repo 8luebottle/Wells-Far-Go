@@ -1,7 +1,13 @@
 package errs
 
 import (
+	goerrors "errors"
 	"fmt"
+)
+
+var (
+	ErrInvalidContext    = goerrors.New("invalid context")
+	ErrWellsFarGoContext = goerrors.New("wells-far-go context error")
 )
 
 type AppErr struct {
