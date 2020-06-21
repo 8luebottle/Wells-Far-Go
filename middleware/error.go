@@ -40,6 +40,13 @@ func ErrorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 				Message: err.Message,
 				Code:    err.Code,
 			})
+
+			// Todo : Fix This
+		case *validator.ValidationErrors:
+			return ctx.JSON(0, WellsFarGoError{
+				Message: "validator error",
+				Code:    0,
+			})
 		}
 		return ctx.JSON(http.StatusInternalServerError, WellsFarGoError{
 			Message: "wells-far-go internal server error",
