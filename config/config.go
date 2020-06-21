@@ -86,6 +86,7 @@ func GetConfig() Config {
 	return c
 }
 
-func Conn() *gorm.DB {
+// DBConn handles Database Connection.
+func DBConn() *gorm.DB {
 	return d
 }

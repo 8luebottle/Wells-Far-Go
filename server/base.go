@@ -28,7 +28,7 @@ func Run() {
 		log.Fatalf("init api config : '%v'", err)
 	}
 
-	db := config.Conn()
+	db := config.DBConn()
 	if err := createTable(db); err != nil {
 		log.Fatalf("create database table : '%v'", err)
 	}

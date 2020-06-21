@@ -2,12 +2,16 @@ package middleware
 
 import (
 	"net/http"
+	"reflect"
 
 	"github.com/labstack/echo/v4"
 	"github.com/pkg/errors"
+	"gopkg.in/go-playground/validator.v9"
 
 	"github.com/8luebottle/Wells-Far-Go/pkg/errs"
 )
+
+var validateType = reflect.TypeOf(validator.ValidationErrors{})
 
 type WellsFarGoError struct {
 	Message string `json:"message"`
@@ -23,8 +27,11 @@ func ErrorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		if err = next(ctx); err == nil {
 			return nil
 		}
-
 		oerr := errors.Cause(err)
+		if reflect.TypeOf(err) == validateType {
+			return ctx.JSON(200, WellsFarGoError{Message: "validate failed", Code: 400})
+		}
+
 		switch err := oerr.(type) {
 		case *echo.HTTPError:
 			return ctx.JSON(err.Code, WellsFarGoError{Message: err.Message.(string)})
@@ -32,6 +39,13 @@ func ErrorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 			return ctx.JSON(err.Code, WellsFarGoError{
 				Message: err.Message,
 				Code:    err.Code,
+			})
+
+			// Todo : Fix This
+		case *validator.ValidationErrors:
+			return ctx.JSON(0, WellsFarGoError{
+				Message: "validator error",
+				Code:    0,
 			})
 		}
 		return ctx.JSON(http.StatusInternalServerError, WellsFarGoError{
