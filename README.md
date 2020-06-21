@@ -53,11 +53,21 @@ To view **Wells Far-Go** document, please click on the link below.
 
 ### Banks
 ```sql
-  Column   | Type |
------------+------+
- bank_code | text |
- name      | text |
- address   | text |
+ Column  |  Type  |
+---------+--------
+ id      | bigint |
+ name    | text   |
+ address | text   |
+```
+
+### Branches
+```sql
+  Column   |  Type  |
+-----------+--------+
+ id        | bigint |
+ bank_code | text   |
+ name      | text   |
+ location  | text   |
 ```
 
 ### Customers
