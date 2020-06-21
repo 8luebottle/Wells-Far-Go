@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/8luebottle/Wells-Far-Go/middleware"
+	"github.com/8luebottle/Wells-Far-Go/model"
 	"github.com/8luebottle/Wells-Far-Go/pkg/errs"
 	"github.com/8luebottle/Wells-Far-Go/service"
 )
@@ -29,9 +30,14 @@ func (b *bank) CreateBank(c echo.Context) error {
 		return errors.Wrapf(errs.ErrWellsFarGoContext, "err : '%s'", err)
 	}
 
-	bank, err := b.bs.CreateNewBank()
+	var newBank model.Bank
+	if err = ctx.Bind(&newBank); err != nil {
+		return errors.Wrapf(errs.ErrBindRequest, "err : '%s'", err)
+	}
+
+	bank, err := b.bs.CreateNewBank(&newBank)
 	if err != nil {
-		return errors.Wrap(err, "create new bank")
+		return errors.Wrap(err, "create a new bank")
 	}
 
 	return ctx.JSON(http.StatusOK, bank)
