@@ -26,10 +26,26 @@ func NewAppErr(err error, message string, code int) *AppErr {
 	}
 }
 
-func EmptyField(err error) *AppErr {
+func ErrEmptyField(err error, fieldName string) *AppErr {
 	return &AppErr{
 		Err:     err,
-		Message: "field can not be empty",
+		Message: fmt.Sprintf("%s can not be empty", fieldName),
+		Code:    http.StatusBadRequest,
+	}
+}
+
+func ErrFieldLength(err error, fieldName string) *AppErr {
+	return &AppErr{
+		Err:     err,
+		Message: fmt.Sprintf("%s is too short or too long", fieldName),
+		Code:    http.StatusBadRequest,
+	}
+}
+
+func ErrDataType(err error, fieldName string) *AppErr {
+	return &AppErr{
+		Err:     err,
+		Message: fmt.Sprintf("invalid data input for %s", fieldName),
 		Code:    http.StatusBadRequest,
 	}
 }
