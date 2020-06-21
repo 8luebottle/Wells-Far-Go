@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/8luebottle/Wells-Far-Go/middleware"
 	"github.com/labstack/echo/v4"
 
 	"github.com/8luebottle/Wells-Far-Go/api"
@@ -12,6 +13,7 @@ import (
 func InitRouters(e *echo.Echo) {
 	v := e.Group(api.VERSION)
 
+	e.Use(middleware.ErrorMiddleware)
 	bankRepo := repository.ParseBankStorer()
 	bankSvc := service.ParseBankServer(bankRepo)
 	bankHandler := handler.ParseBankController(bankSvc)
