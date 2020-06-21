@@ -40,7 +40,7 @@ func Run() {
 func createTable(d *gorm.DB) error {
 	if err := d.AutoMigrate(
 		&model.Account{}, &model.Address{},
-		&model.Bank{},
+		&model.Bank{}, &model.Branch{},
 		&model.Customer{},
 		&model.Transaction{},
 	).Error; err != nil {
