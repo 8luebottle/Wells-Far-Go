@@ -1,12 +1,12 @@
 package service
 
 import (
+	v "github.com/8luebottle/Wells-Far-Go/validator"
 	"github.com/pkg/errors"
 
 	c "github.com/8luebottle/Wells-Far-Go/config"
 	"github.com/8luebottle/Wells-Far-Go/model"
 	"github.com/8luebottle/Wells-Far-Go/repository"
-	v "github.com/8luebottle/Wells-Far-Go/validator"
 )
 
 type BankServer interface {
@@ -24,10 +24,11 @@ func ParseBankServer(br repository.BankStorer) BankServer {
 // CreateNewBank creates new bank.
 func (bs *bankService) CreateNewBank(newBank *model.Bank) (*model.Bank, error) {
 
-	if err := v.NewBank(newBank); err != nil {
+	if err := v.NewRequest(newBank); err != nil {
 		return nil, errors.Wrap(err, "validate new bank")
 	}
 
+	// Todo: SWIFT code should be all capital
 	if err := bs.br.Create(c.DBConn(), newBank); err != nil {
 		return nil, errors.Wrap(err, "create new bank to db table")
 	}
