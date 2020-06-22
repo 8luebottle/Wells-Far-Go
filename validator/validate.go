@@ -7,19 +7,21 @@ import (
 
 	"gopkg.in/go-playground/validator.v9"
 
-	"github.com/8luebottle/Wells-Far-Go/model"
 	"github.com/8luebottle/Wells-Far-Go/pkg/errs"
 )
 
-var validate *validator.Validate
+var (
+	validate     *validator.Validate
+	validateType = reflect.TypeOf(validator.ValidationErrors{})
+)
 
-var validateType = reflect.TypeOf(validator.ValidationErrors{})
-
+// Tag of gopkg validator
 const (
-	Required = "required"
 	Alpha    = "alpha"
 	AlphaNum = "alphanum"
 	Length   = "len"
+	Num      = "numeric"
+	Required = "required"
 )
 
 const (
@@ -27,29 +29,28 @@ const (
 	EndString   = "' failed"
 )
 
-// NewBank validates input new bank data against a format pattern.
-func NewBank(newBank *model.Bank) error {
+type ValidRequest struct {
+	fieldName  string
+	eMessage   string
+	validError error
+}
+
+// NewRequest validates new request's fields.
+func NewRequest(newStruct interface{}) error {
 	validate = validator.New()
-	err := validate.Struct(newBank)
+	err := validate.Struct(newStruct)
 	if reflect.TypeOf(err) == validateType {
 		eMessage := err.Error()
 		fieldName := getFieldName(eMessage)
-
-		r := strings.Contains(eMessage, Required)
-		if r {
-			return errs.ErrEmptyField(err, fieldName)
+		newValidator := &ValidRequest{
+			fieldName:  fieldName,
+			eMessage:   eMessage,
+			validError: err,
 		}
-		l := strings.Contains(eMessage, Length)
-		if l {
-			return errs.ErrFieldLength(err, fieldName)
-		}
-		a := strings.Contains(eMessage, Alpha)
-		an := strings.Contains(eMessage, AlphaNum)
-		if a || an {
-			return errs.ErrDataType(err, fieldName)
+		if err := getErrorByTags(newValidator); err != nil {
+			return err
 		}
 	}
-	// Todo : check Address
 	return nil
 }
 
@@ -59,6 +60,30 @@ func getFieldName(errorMessage string) (fieldName string) {
 	end := strings.Index(errorMessage, EndString)
 	fieldName = errorMessage[start+len(StartString) : end]
 	return fieldName
+}
+
+// getErrorByTags extracts error message from validator pkg.
+func getErrorByTags(vr *ValidRequest) error {
+	a := strings.Contains(vr.eMessage, Alpha)
+	an := strings.Contains(vr.eMessage, AlphaNum)
+	n := strings.Contains(vr.eMessage, Num)
+	l := strings.Contains(vr.eMessage, Length)
+	r := strings.Contains(vr.eMessage, Required)
+
+	switch {
+	case a:
+		fallthrough
+	case an:
+		fallthrough
+	case n:
+		return errs.ErrDataType(vr.validError, vr.fieldName)
+	case l:
+		return errs.ErrFieldLength(vr.validError, vr.fieldName)
+	case r:
+		return errs.ErrEmptyField(vr.validError, vr.fieldName)
+	default:
+		return nil
+	}
 }
 
 // checkEmptyString checks empty string fields.
